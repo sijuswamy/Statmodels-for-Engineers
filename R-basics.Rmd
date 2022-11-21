@@ -1,0 +1,510 @@
+---
+title: "R Programming-Basics"
+author: "siju.swamy@saintgits.org"
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output: slidy_presentation
+css: custom.css
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = T)
+```
+
+# What is R?
+
+- R is a programming language and software environment for statistical analysis, graphics representation and reporting.
+
+- R was created by Ross Ihaka and Robert Gentleman at the University of Auckland, New Zealand, and is currently developed by the R Development Core Team.
+
+- This programming language was named R, based on the first letter of first name of the two R authors (Robert Gentleman and Ross Ihaka), and partly a play on the name of the Bell Labs Language S.
+
+# Features of R
+
+The following are the important features of R
+
+- R is a well-developed, simple and effective programming language which includes conditionals, loops, user defined recursive functions and input and output facilities.
+
+- R has an effective data handling and storage facility,
+
+- R provides a suite of operators for calculations on arrays, lists, vectors and matrices.
+
+- R provides a large, coherent and integrated collection of tools for data analysis.
+
+- R provides graphical facilities for data analysis and display either directly at the computer or printing at the papers.
+
+R is world's most widely used statistics programming language. It's the # 1 choice of data scientists and supported by a vibrant and talented community of contributors. R is taught in universities and deployed in mission critical business applications.
+
+# Local Environment Setup
+
+- Installing R distribution: You can download the Windows installer version of R from R-3.2.2 for Windows (32/64 bit) and save it in a local directory.
+- Installing R Studio: Download and install from the link https://www.rstudio.com/products/rstudio/download/
+
+- Installing TeX distribution: Use either MikTeX full distribution or TeXLive 2003+ for .pdf rendering
+
+
+# RStudio environnments
+
+- Sourse
+- Console
+- Environment & History
+- Files, plots,Packages and Help
+
+# Basic Tips for using R
+
+- R is command-line driven. It requires you to type or copy-and-paste commands after a command prompt (>) that appears when you open R. After typing a command in the R console and pressing Enter on your keyboard, the command will run. If your command is not complete, R issues a continuation prompt (signified by a plus sign: +). Alternatively you can write a script in the script window, and select a command, and click the Run button.
+
+- R is case sensitive. Make sure your spelling and capitalization are correct.
+
+- Commands in R are also called functions. The basic format of a function in R is: function.name(argument, options).
+
+- The up arrow (^) on your keyboard can be used to bring up previous commands that you've typed in the R console.
+
+- The '\$' symbol is used to select a particular column within the table (e.g., table$column).
+
+- Any text that you do not want R to act on (such as comments, notes, or instructions) needs to be preceded by the # symbol (a.k.a. hash-tag, comment, pound, or number symbol). R ignores the remainder of the script line following #
+
+# R packages for workshop
+
+The following packages will be used for data analysis in this workshop.
+- plyr,dplyr,psych,ggplot2,car,knitr,rmarkdown, Hmisc, corrplot, rcompanion, 
+
+
+# Data input and output
+
+Various methods to read and write data using R are
+
+- Loading and storing data with the keyboard and clipboard
+
+- Loading data from a file
+
+# Loading and storing data with the keyboard and clipboard
+
+Use either  
+
+      var=scan()
+or 
+
+      var=readline(prompt="Prompt to user:")
+      
+methods. 
+
+Example:
+
+```{r}
+v1=scan()
+```
+
+```{r}
+v2=readline(prompt = "Enter your Name:")
+```
+
+
+
+# Direct method by assignment method.
+
+In this method, directly store the data to a variable in the form of a vector.
+
+For example
+
+```{r}
+ID<-1:5
+First_name<-c("George","Joseph","Richard","Bridget"," Benn")
+Gender<-c("male","male","male","female","male")
+Salary<-c(12000,23000,34000,45000,56000)
+```
+Values in these variables can be displayed by referring their respective names:
+
+```{r}
+ID
+First_name
+Gender
+Salary
+```
+
+# Binding data together
+
+We can bind the similar data together using  **data.frame** . For example, in the above example the related data are combined together as in the code chunk shown bellow.
+
+
+```{r}
+employ_data<-data.frame(ID,First_name,Gender,Salary)# binding data together
+employ_data # display data frame
+print(employ_data[employ_data$Salary>34000,])# apply a selection query
+table(employ_data$Gender)# a frequency table based on gender
+#summary(employ_data[employ_data$Gender=="female",])
+```
+
+# One way enter from the keyboard is to read from standard input (stdin()).
+
+As an example 
+
+```{r}
+# Cutting and pasting using read.table and stdin()
+#data <- read.table(stdin(), header=TRUE,sep = "\t") 
+# You will be prompted for input; copy and paste text here
+
+# Or:
+# data <- read.csv(stdin())
+```
+
+# Loading data in a script
+
+```{r}
+# Using read.table()
+data <- read.table(header=TRUE, text='
+    size weight cost
+   small      5    6
+  medium      8   10
+   large     11    9
+ ')
+```
+
+
+# Data output
+
+By default, R prints row names. If you want to print the table in a format that can be copied and pasted, it may be useful to suppress them.
+
+```{r}
+print(data, row.names=FALSE)
+```
+
+# Loading data from a file
+
+- **Reading a table**: Use the syntax
+
+      data=read.table("filename.txt",header=TRUE)
+
+- **Reading a csv file**: Use the syntax
+
+      data=read.csv("filename.csv",header=TRUE)
+
+- **Reading a xls file**: Use the syntax
+
+      data=read.xls("filename.xls",header=TRUE)
+
+- **Reading a SPSS file**: Use the syntax
+
+      data=read.xls("filename.sav",header=TRUE)
+
+Note: to use xls files, we need *gdata* and for sav file *foreign* libraries respectively.
+
+# Manipulating Data
+
+- Randomizing order
+
+- Sorting
+
+- Converting between vector types
+
+- Finding and removing duplicate records
+
+- Recoding data
+
+- Mapping vector values
+
+
+# Randomizing order
+
+To randomize the order of a data structure, use *sample(data)* function. Examples are:
+
+1. Example 1 (Vector)
+
+```{r}
+# Create a vector
+v <- 11:20
+
+# Randomize the order of the vector
+v <- sample(v)
+```
+
+2. Example 2 (Data frame)
+
+```{r}
+data <- data.frame(label=letters[1:5], number=11:15)
+data
+
+# Randomize the order of the data frame
+data <- data[sample(1:nrow(data)), ]
+data
+```
+
+# Sorting
+
+To sort a vector, matrix, or data frame, we use *sort(data,decreasing=T/F)* function. To sort a data frame on one or more columns, you can use the *arrange* function from *plyr* package. Examples are
+
+1. Example 1
+
+```{r}
+# Make up a randomly ordered vector
+v <- sample(101:110)
+
+# Sort the vector
+sort(v)
+# Reverse sort
+sort(v, decreasing=TRUE)
+```
+
+2. Example 2
+
+```{r}
+df <- data.frame (id=1:4,
+            weight=c(20,27,24,22),
+            size=c("small", "large", "medium", "large"))
+df
+
+library(plyr)
+
+# Sort by weight column.
+arrange(df, weight) 
+```
+
+# Recoding data
+
+To recode data or calculate new data columns from existing ones, we can use *mapvalues* from *plyr* package.
+
+
+1. Example 1
+
+```{r}
+library(plyr)
+data <- read.table(header=T, text='
+ subject sex control cond1 cond2
+       1   M     7.9  12.3  10.7
+       2   F     6.3  10.6  11.1
+       3   F     9.5  13.1  13.8
+       4   M    11.5  13.4  12.9
+')
+data$scode <- mapvalues(data$sex, from = c("M", "F"), to = c("1", "2"))
+data
+```
+
+# Creating a catagorical variable 
+
+## Using assignment method
+
+```{r}
+data$category[data$control<= 7] <- "low"
+data$category[data$control>7 & data$control<=9] <- "medium"
+data$category[data$control>9 ] <- "high"
+# Convert the column to a factor
+data$category <- factor(data$category)
+data
+```
+
+
+# 'Cut' function to create new catagorical variable
+
+Base on the continuous variable control, let us create a catagorical variable 'catagory' with values 'low, medium and high' as follows.
+
+```{r}
+data$category <- cut(data$control,
+                     breaks=c(-Inf, 7, 9, Inf),
+                     labels=c("low","medium","high"))
+data
+```
+# Calculating a new continuous variable
+
+Suppose you want to add a new column with the geometric mean of the three measurements.
+
+```{r}
+data$gmean <- sqrt(data$control*data$cond1*data$cond2)
+data
+```
+
+# Renaming columns in a data frame
+
+To rename the columns in a data frame, use *rename(dataframe, "colname"="newcolname")* from the *plyr* package:
+
+
+
+```{r}
+library(plyr)
+d <- data.frame(alpha=1:3, beta=4:6, gamma=7:9)
+d
+d1=rename(d, c("beta"="two", "gamma"="three"))
+d1
+```
+# Creating a subset of dataframe 
+
+```{r}
+d2=subset(d1,three>5)
+d2
+```
+
+
+# Adding and removing columns from a data frame
+
+ To add  columns to a data frame, just assign the new variable with values using '<-' operator
+
+To remove a column from a data frame assign the corresponding column by 'NULL' or 'subset' operation as shown in the example.
+
+```{r}
+data <- read.table(header=TRUE, text='
+ id weight
+  1     20
+  2     27
+  3     24
+')
+data
+data$height=c(140,135,156)
+data$name=c("Joseph","Johnson","David")
+data1<- subset(data, select=-id)# store a subset by deleting the colomn id
+#data$id<-NULL# column id will be removed
+print(data1,row.names = FALSE)
+```
+
+# Converting data between wide and long format
+
+Many functions in R expect data to be in a long format rather than a wide format. Programs like SPSS, however, often use wide-formatted data.
+
+To convert data from a wide format to a long format, use *melt(data_wide,id.vars=c("col1", "col2",...))*  function from *rshape2* package.
+
+To convert data from a long format to a wide format, use *dcast(data_long,var1 + var2 ~ classvar, value.var="value"))* from *reshape2* package.
+
+# Example: wide to long format
+
+```{r}
+olddata_wide <- read.table(header=TRUE, text='
+ subject sex control cond1 cond2
+       1   M     7.9  12.3  10.7
+       2   F     6.3  10.6  11.1
+       3   F     9.5  13.1  13.8
+       4   M    11.5  13.4  12.9
+')
+# Make sure the subject column is a factor
+olddata_wide$subject <- factor(olddata_wide$subject)
+```
+```{r}
+library(reshape2,plyr)
+data_long <- melt(olddata_wide,
+        # ID variables - all the variables to keep but not split apart on
+    id.vars=c("subject", "sex"),
+        # The source columns
+    measure.vars=c("control", "cond1", "cond2" ),
+        # Name of the destination column that will identify the original
+        # column that the measurement came from
+    variable.name="condition",
+    value.name="measurement"
+)
+data_long <- arrange(data_long,data_long$subject, data_long$condition)# to get a sorted view
+data_long
+```
+
+# Example : long to wide format
+
+```{r}
+library(reshape2)
+
+newdata_wide <- dcast(data_long, subject + sex ~ condition, value.var="measurement")
+newdata_wide
+```
+# Summarizing data
+
+It is quite often to do summarize your data (with mean, standard deviation, etc.), broken down by group.
+There are three ways described here to group data based on some specified variables, and apply a summary function (like mean, standard deviation, etc.) to each group.The easiest way is to use the *ddply()* from *plyr* package.
+
+Example:
+Suppose you have this data and want to find the N, mean of change, standard deviation, and standard error of the mean for each group, where the groups are specified by each combination of sex and condition: F-placebo, F-aspirin, M-placebo, and M-aspirin.
+```{r}
+data <- read.table(header=TRUE, text='
+ subject sex condition before after change
+       1   F   placebo   10.1   6.9   -3.2
+       2   F   placebo    6.3   4.2   -2.1
+       3   M   aspirin   12.4   6.3   -6.1
+       4   F   placebo    8.1   6.1   -2.0
+       5   M   aspirin   15.2   9.9   -5.3
+       6   F   aspirin   10.9   7.0   -3.9
+       7   F   aspirin   11.6   8.5   -3.1
+       8   M   aspirin    9.5   3.0   -6.5
+       9   F   placebo   11.5   9.0   -2.5
+      10   M   placebo   11.9  11.0   -0.9
+      11   F   aspirin   11.4   8.0   -3.4
+      12   M   aspirin   10.0   4.4   -5.6
+      13   M   aspirin   12.5   5.4   -7.1
+      14   M   placebo   10.6  10.6    0.0
+      15   M   aspirin    9.1   4.3   -4.8
+      16   F   placebo   12.1  10.2   -1.9
+      17   F   placebo   11.0   8.8   -2.2
+      18   F   placebo   11.9  10.2   -1.7
+      19   M   aspirin    9.1   3.6   -5.5
+      20   M   placebo   13.5  12.4   -1.1
+      21   M   aspirin   12.0   7.5   -4.5
+      22   F   placebo    9.1   7.6   -1.5
+      23   M   placebo    9.9   8.0   -1.9
+      24   F   placebo    7.6   5.2   -2.4
+      25   F   placebo   11.8   9.7   -2.1
+      26   F   placebo   11.8  10.7   -1.1
+      27   F   aspirin   10.1   7.9   -2.2
+      28   M   aspirin   11.6   8.3   -3.3
+      29   F   aspirin   11.3   6.8   -4.5
+      30   F   placebo   10.3   8.3   -2.0
+ ')
+```
+
+# Summarizing data
+
+```{r}
+library(plyr)
+cdata <- ddply(data, c("sex", "condition"), summarise,
+               N    = sum(!is.na(change)),
+               mean = mean(change, na.rm=TRUE),
+               sd   = sd(change, na.rm=TRUE),
+               se   = sd / sqrt(N)
+)
+cdata
+```
+
+# Converting between data frames and contingency tables
+
+These three data structures represent the same information, but in different formats:
+
+1. cases: A data frame where each row represents one case.
+
+2. ctable: A contingency table.
+
+3. counts: A data frame of counts, where each row represents the count of each combination.
+
+
+ To do convert between a data frame of cases to contingency table use *table()* function , to a data frame of counts of each type of case use *as.dataframe(table())* functions.
+ 
+ Example:
+ 
+```{r}
+# Each row represents one case
+cases <- data.frame(
+    Sex=c("M", "M", "F", "F", "F"), 
+    Color=c("brown", "blue", "brown", "brown", "brown")
+)
+cases
+```
+```{r}
+# A contingency table
+ctable <- table(cases)
+ctable
+```
+# Contigency table to frequency table
+
+```{r}
+# Cases to Counts
+countdf <- as.data.frame(table(cases))
+countdf
+```
+
+## Cross Tabulation tables
+
+Contingency tables provide a way to display the frequencies and relative frequencies of observations, which are classified according to two categorical variables. The elements of one category are displayed across the columns; the elements of the other category are displayed over the rows. 
+
+The data describing the colors and defects associated with over 1200 M&M candies that a few students observed. This data set has four variables: student (who collected the data), id (the number of the M&M that the student observed, in order of when they encountered that particular M&M), color (whether the candy was Blue, Red, BRown, Green, Orange, or Yellow), and whether there were defects observed (Letter incomplete or missing, Chipped or Cracked, Multiple defects, or No defects):
+
+# Cross Tabulation with dependancy check
+
+```{r}
+# library(RCurl)
+# library(gmodels)
+# url <- "https://raw.githubusercontent.com/NicoleRadziwill/Data-"
+# url <- paste(url,"for-R-Examples/master/mnm-clean.csv",sep="")
+ #x <- getURL(url,ssl.verifypeer=FALSE)
+ #mnms <- read.csv(text = x)
+ #CrossTable(mnms$color, mnms$defect, prop.t=FALSE, prop.r=TRUE, prop.c=TRUE,chisq = TRUE,format = "SAS")
+```
+

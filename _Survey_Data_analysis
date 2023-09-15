@@ -46,16 +46,16 @@ As the first stage of the data pre-processing, the row data is cleaned and wrang
 
 Since the column titles obtained through the *Google forms* are the questions given in the questionnaire, it will be not suitable to represent an attribute. There are two ways to correct it- manually correct in the downloaded excel file or rename the column names programatically. 
 
-In this article, the later approach is demonstrated.
+In this article, the latter approach is demonstrated.
 
 ```{r}
-colnames(df) <- c("Gender","Age","Weight","Orange","Grapes","Banana","Apple","Mango","Cherry","Height")
+colnames(df) <- c("Gender","Age","Weight","Height","Orange","Grapes","Banana","Apple","Mango","Cherry")
 #df
 ```
 
 ## Descriptive Analysis
 
-A cleaned data is examined with basic statistical tools to understand the distribution of various attributes and its relationship between control variables. At this initial stage, fundamental tools like frequency tables, cross tabulations and percentage analysis followed by proper visualizations will be used. All the socio-demographic variables and control variables will be analysed statistically.
+A clean set of data is examined with basic statistical tools to understand the distribution of various attributes and the relationship between control variables. At this initial stage, fundamental tools like frequency tables, cross tabulations and percentage analysis followed by proper visualizations will be used. All the socio-demographic variables and control variables will be analysed statistically.
 
 >Gender
 

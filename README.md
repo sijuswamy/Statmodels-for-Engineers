@@ -18,7 +18,7 @@ Please click the following link for ` Descriptive Data analysis` Notebook:
 
 Please click the following link for ` Data visualization using R` Notebook:
 
-<>
+<https://github.com/sijuswamy/Statmodels-for-Engineers/blob/main/Barplot_Pie_chart.Rmd>
 
 ## Session 4-  Article generation using R
 

@@ -22,3 +22,6 @@ Please click the following link for ` Data visualization using R` Notebook:
 
 ## Session 4-  Article generation using R
 
+### Data collection Link: Please click the following link to fill the data collection form for this Task:
+
+<https://forms.gle/iGsfaqYZ28hHsmrM9>
